@@ -12,28 +12,33 @@ Creating custom dynamic globs for your `npm run dev` or -`build` commands can be
 The globs are set up next to your `dev` and `build` commands in your `package.json` of your project. You can give them whatever name fits.
 
 #### Examples:
-Below script only get the 300x250 `.richmediarc` files, for running on your dev server, since it is filtering the 300x250 folder.
+Below script only gets the 300x250 `.richmediarc` files, for running on your dev server, since it is filtering the 300x250 folder.
 ```json title="package.json"
 "scripts": {
-    "dev:300x250": "dds --mode development  --glob ./src/plain/300x250/.richmediarc"
+    "dev:300x250": "dds --mode development  --glob **/**/300x250/.richmediarc"
 },
 ```
-
+Or alternatively you could use a wildcard at the end to catch not only `.richmediarc` but also `.richmediarc.nl` for example. 
+```json title="package.json"
+"scripts": {
+    "dev:300x250": "dds --mode development  --glob **/**/300x250/.*"
+},
+```
 Below script only gets the `.richmediarc.regular` units, for running on your dev server, but is checks all size folders due to the `**` wildcard.
 ```json title="package.json"
 "scripts": {
-    "dev:regular": "dds --mode development  --glob ./src/plain/**/.richmediarc.regular",
+    "dev:regular": "dds --mode development  --glob **/**/**/.richmediarc.regular",
 },
 ```
 
 Below script is to build every `.richmediarc.*` file, `.richmediarc.fr` and `.richmediarc.nl`, excluding anything that ends with `de`.
 ```json title="package.json"
 "scripts": {
- "dev:en": "dds --mode production  --glob ./src/plain/**/.richmediarc.*[!de]",
+ "dev:en": "dds --mode production  --glob **/**/.richmediarc.*[!de]",
 },
 ```
 
 
 :::important
-Globs currently only work with sorting out `.richmediarc` files. For dynamically created spreadsheet .richmediarc files, you can't read their names out in order to filter them.
+Globs currently only work with sorting out local `.richmediarc` files. For dynamically created spreadsheet .richmediarc files, you can't read their names out in order to filter them. But you could alternatively use a spreadsheet filter in the .shardrc file to make that happen.
 :::
